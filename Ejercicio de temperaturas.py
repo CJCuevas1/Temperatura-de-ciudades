@@ -1,4 +1,16 @@
-# Se presentan las 3 matrices 3D de la siguiente manera: ciudades -> semanas -> días
+# Se plantea la función para calcular el promedio
+def calcular_promedio(temperaturas):
+    promedios = {}  # Se crea un diccionario
+    # En este bloque se itera sobre cada ciudad y las semanas, además de hacer sumas, conteo de días y calculo del promedio
+    for ciudad, semanas in temperaturas.items():
+        suma_total = sum(temp for semana in semanas for temp in semana)
+        cantidad_dias = sum(len(semana) for semana in semanas)
+        promedios[ciudad] = suma_total / cantidad_dias
+
+    return promedios
+
+
+# Datos de temperaturas basadas en el código anterior
 temperaturas = {
     "Chernóbil": [
         [-5, -4, -3, -2, -1, 0, 1],
@@ -20,17 +32,19 @@ temperaturas = {
     ]
 }
 
-# Se imprime un texto en base a las ciudades que se escogieron y su razón.
+# Se calcula el prmedio
+promedios_ciudades = calcular_promedio(temperaturas)
+
 print("Estas ciudades, marcadas por eventos históricos, tienen temperaturas que varían según la estación del año.\n")
 
-# Bloque que imprime una pregunta sobre la ciudad de la que se desea saber la temperatura.
+# En este bloque se imprime una pregunta sobre la ciudad de la que se desea saber la temperatura.
 print("Elige una ciudad para ver sus promedios de temperatura:")
 print("1. Chernóbil")
 print("2. Hiroshima")
 print("3. Nagasaki")
 opcion = input("Ingresa el número de la ciudad (1, 2 o 3): ")
 
-# Se valida las opciones que indicó el usuario.
+# Se presentan las condiciones ante la elección del usuario
 if opcion == "1":
     ciudad_elegida = "Chernóbil"
 elif opcion == "2":
@@ -41,9 +55,5 @@ else:
     print("Opción no válida. Por favor, ejecuta el programa nuevamente.")
     exit()
 
-# Se muestran los resultados requeridos
-print(f"\nPromedios de temperatura para {ciudad_elegida}:\n")
-semanas = temperaturas[ciudad_elegida]
-for semana_num, semana in enumerate(semanas, start=1):
-    promedio = sum(semana) / len(semana)  # Se calcula el promedio de las temperaturas
-    print(f"Semana {semana_num}: {promedio:.2f}°C")
+# Se imprime el promedio de la ciudad elegida
+print(f"\nLa temperatura promedio en la ciudad de {ciudad_elegida} es: {promedios_ciudades[ciudad_elegida]:.2f}°C")
